@@ -22,7 +22,7 @@ user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36
 headers = {'User-Agent': user_agent,
           'Referer': 'https://www.momoshop.com.tw'}
 
-PATH = '/Users/cyl/pchome24/chromedriver'
+PATH = './chromedriver'
 driver = webdriver.Chrome(PATH)
 dict = {"prdName": [], "price": [], "goodsUrl": [], "prdImg": []}
 
@@ -94,11 +94,11 @@ def write_to_dict(n):
     print('file not exists')
 
 if __name__ == '__main__':
-  open_chrome_browser('即期品', 1)
+  open_chrome_browser('澳洲', 1)
   n = get_last_pageNo()
   i = 1
   while i <= n:
-    open_chrome_browser('即期品', i)
+    open_chrome_browser('澳洲', i)
     mimic_human()
     element = driver.find_element_by_css_selector('.listArea > ul > li')
     print('next page')
@@ -106,4 +106,5 @@ if __name__ == '__main__':
     write_to_dict(i)
     i+=1
 dfToExcel(dict)
+print('finally finished')
 exit()
