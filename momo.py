@@ -12,6 +12,8 @@ from bs4 import BeautifulSoup
 import time
 import pandas as pd
 import urllib
+from webdriver_manager.chrome import ChromeDriverManager
+
 # from setuptools import setup, find_packages
 # referer列表
 
@@ -23,7 +25,9 @@ headers = {'User-Agent': user_agent,
           'Referer': 'https://www.momoshop.com.tw'}
 
 PATH = './chromedriver'
-driver = webdriver.Chrome(PATH)
+# driver = webdriver.Chrome(PATH)
+driver = webdriver.Chrome(ChromeDriverManager().install())
+
 dict = {"prdName": [], "price": [], "goodsUrl": [], "prdImg": []}
 
 def url(keyword, pageNo):
