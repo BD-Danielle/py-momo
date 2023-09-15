@@ -4,15 +4,17 @@ import os.path
 import random
 import datetime
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import time
 import pandas as pd
 import urllib
-from webdriver_manager.chrome import ChromeDriverManager
 
 # from setuptools import setup, find_packages
 # referer列表
@@ -24,10 +26,7 @@ user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36
 headers = {'User-Agent': user_agent,
           'Referer': 'https://www.momoshop.com.tw'}
 
-PATH = './chromedriver'
-# driver = webdriver.Chrome(PATH)
-driver = webdriver.Chrome(ChromeDriverManager().install())
-
+driver = webdriver.Chrome()
 dict = {"prdName": [], "price": [], "goodsUrl": [], "prdImg": []}
 
 def url(keyword, pageNo):
@@ -47,7 +46,7 @@ def open_chrome_browser(keyword, pageNo):
 
 def mimic_human():
   try:
-    html = driver.find_element_by_tag_name('html')
+    html = driver.find_element(By.TAG_NAME, 'html')
     # 模擬人為操作頁面
     for x in range(6):
       html.send_keys(Keys.END)
@@ -61,7 +60,7 @@ def mimic_human():
     print("Page loaded")
 
 def get_last_pageNo():
-  lastPage = driver.find_element_by_css_selector('.pageArea > ul > li:last-child > a')
+  lastPage = driver.find_element(By.CSS_SELECTOR, '.pageArea > ul > li:last-child > a')
   lastPageNo = int(lastPage.get_attribute('pageidx'), base = 10)
   print(lastPageNo)
   return lastPageNo
@@ -104,7 +103,7 @@ if __name__ == '__main__':
   while i <= n:
     open_chrome_browser('澳洲', i)
     mimic_human()
-    element = driver.find_element_by_css_selector('.listArea > ul > li')
+    element = driver.find_element(By.CSS_SELECTOR, '.listArea > ul > li')
     print('next page')
     download_page(element, i)
     write_to_dict(i)
