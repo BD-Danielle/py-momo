@@ -21,7 +21,7 @@ USER_AGENT = ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.3
 HEADERS = {'User-Agent': USER_AGENT, 'Referer': 'https://www.momoshop.com.tw'}
 
 # Set up the Chrome driver
-driver = webdriver.Chrome(ChromeDriverManager().install())
+driver = webdriver.Chrome()
 
 
 def generate_url(keyword, page_no):
@@ -105,7 +105,7 @@ if __name__ == '__main__':
         print('Next page')
         download_page(element, i)
         write_to_dict(i, data_dict)
-        give_a_break(random.randrange(10))
+        # give_a_break(random.randrange(10))
 
     df_to_excel(data_dict)
     print('Finally finished')
