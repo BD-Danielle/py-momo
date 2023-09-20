@@ -99,7 +99,7 @@ def parse_html_to_dict(n, data_dict, keyword_folder):
         print('File does not exist')
 
 
-KEYWORD = '紅石榴汁'
+KEYWORD = '橄欖油'
 if __name__ == '__main__':
     if not KEYWORD:
         KEYWORD = input("Please type the keyword: ")
